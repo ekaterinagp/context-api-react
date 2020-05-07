@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles/index";
 
 //Material UI components
@@ -9,6 +9,9 @@ import InputBase from "@material-ui/core/InputBase";
 //Material UI Icons
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
+
+// Import Context
+import { AppContext } from "../App";
 
 const useStyles = makeStyles({
   root: {
@@ -26,14 +29,25 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Input_two() {
+export default function InputOne() {
   const classes = useStyles();
+
+  const { state, dispatch } = useContext(AppContext);
+
+  const changeInputValue = (newValue) => {
+    dispatch({ type: "UPDATE_INPUT", data: newValue });
+  };
 
   return (
     <React.Fragment>
       <Grid item xs={12} md={6}>
         <Paper className={classes.root}>
-          <InputBase className={classes.input} placeholder="Input two" />
+          <InputBase
+            className={classes.input}
+            placeholder="Input one"
+            value={state.inputText}
+            onChange={(e) => changeInputValue(e.target.value)}
+          />
           <IconButton className={classes.iconButton} aria-label="search">
             <SearchIcon />
           </IconButton>
